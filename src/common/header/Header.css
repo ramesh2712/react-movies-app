@@ -3,6 +3,12 @@
     padding: 8px 32px 8px 16px;
     height: 36px;
 }
+.upcoming-movies{
+    background-color: #ff999b;
+    padding: 6px;
+    text-align: center;
+}
+
 .login-button{
     float: right;
 }
