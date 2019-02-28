@@ -6,6 +6,9 @@ import Typography from '@material-ui/core/Typography';
 import './Details.css'
 import Home from "../../screens/home/home";
 import YouTube from "react-youtube"
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
 
 class Details extends Component {
 
@@ -25,8 +28,11 @@ class Details extends Component {
         console.log(this.state)
     }
 
+    artistClickHandler = (url) => {
+        window.location = url;
+    }
     backtohomeHandler = () => {
-        ReactDOM.render(<Home/>, document.getElementById('root'));
+        ReactDOM.render(<Home />, document.getElementById('root'));
     }
     render() {
         let movie = this.state.movie;
@@ -41,7 +47,7 @@ class Details extends Component {
             <Header />
             <div className="back">
                 <Typography onClick={this.backtohomeHandler}>
-                  &#60;  Back to Home
+                    &#60;  Back to Home
                 </Typography>
             </div>
             <div className="flex-containerDetails ">
@@ -51,7 +57,7 @@ class Details extends Component {
                 <div className="middleDetails">
                     <div>
                         <Typography variant="headline" component="h2">{movie.title}</Typography>
-                    </div><br/>
+                    </div><br />
                     <div>
                         <Typography><span className="bold">Genre: </span> {movie.genres.join(',')}</Typography>
                     </div>
@@ -74,10 +80,30 @@ class Details extends Component {
                         <YouTube
                             videoId={movie.trailer_url.split("?v=")[1]}
                             opts={opts}
-                            onReady={this._onReady}/>
+                            onReady={this._onReady} />
                     </div>
                 </div>
                 <div className="rightDetails">
+                    <div className="bold marginBottom16 marginTop16">
+                        <Typography>
+                            <span className="bold">Artists:</span>
+                        </Typography>
+                    </div>
+                    <div className="paddingRight">
+                        <GridList cellHeight={160} cols={2}>
+                            {movie.artists != null && movie.artists.map(artist => (
+                                <GridListTile
+                                    className="grifTile"
+                                    onClick={() => this.artistClickHandler(artist.wiki_url)}
+                                    key={artist.id}>
+                                    <img src={artist.profile_url} alt={artist.first_name + " " + artist.last_name} />
+                                    <GridListTileBar
+                                            title={artist.first_name + " " + artist.last_name}
+                                        />
+                                </GridListTile>
+                            ))}
+                        </GridList>
+                    </div>
                 </div>
             </div>
         </div>);
