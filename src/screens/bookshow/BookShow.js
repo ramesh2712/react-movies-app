@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import Header from '../../common/header/Header';
 import Typography from '@material-ui/core/Typography';
 import './BookShow.css'
-import Home from "../../screens/home/home";
 import language from '../../common/language';
 import location from '../../common/location';
 import showDate from '../../common/showDate';
@@ -17,7 +15,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Button } from '@material-ui/core';
 import FormHelpertext from '@material-ui/core/FormHelperText';
-import Confirmation from '../confirmation/Confirmation';
+import { Link } from 'react-router-dom';
 
 class BookShow extends Component {
 
@@ -37,10 +35,6 @@ class BookShow extends Component {
             showtimeRequired: 'dispNone',
             ticketsRequired: 'dispNone'
         }
-    }
-
-    backToDetailsHandler = () => {
-        ReactDOM.render(<Home />, document.getElementById('root'));
     }
 
     locationChangeHandler = (event) => {
@@ -65,16 +59,21 @@ class BookShow extends Component {
         this.state.showdate === "" ? this.setState({ showdateRequired: "dispBlock" }) : this.setState({ showdateRequired: "dispNone" });
         this.state.showtime === "" ? this.setState({ showtimeRequired: "dispBlock" }) : this.setState({ showtimeRequired: "dispNone" });
         this.state.tickets === 0 ? this.setState({ ticketsRequired: "dispBlock" }) : this.setState({ ticketsRequired: "dispNone" });
-        ReactDOM.render(<Confirmation bookingSummary={this.state} />, document.getElementById('root'));
 
+        if ((this.state.location === "") || (this.state.language === "") || (this.state.showTime === "") || (this.state.showDate === "") || (this.state.tickets === 0)) { return; }
+
+        this.props.history.push({
+            pathname: '/confirm/' + this.props.match.params.id,
+            bookingSummary: this.state
+        })
     }
     render() {
         return (
             <div>
                 <Header />
                 <div className="bookShow">
-                    <Typography className="back" onClick={this.backToDetailsHandler}>
-                        &#60; Back to Movie Details
+                    <Typography className="back" >
+                        <Link to={"/movie/" + this.props.match.params.id}>&#60; Back to Movie Details</Link>
                     </Typography>
                     <Card className="cardStyle">
                         <CardContent>

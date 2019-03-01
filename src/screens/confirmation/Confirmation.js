@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import Header from '../../common/header/Header';
 import './Confirmation.css';
-import BookShow from '../../screens/bookshow/BookShow';
-import Home from '../../screens/home/home';
 import coupons from '../../common/coupons';
 import Typography from '@material-ui/core/Typography';
 import Input from '@material-ui/core/Input';
@@ -19,6 +16,7 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import green from '@material-ui/core/colors/green';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
     close: {
@@ -44,19 +42,15 @@ class Confirmation extends Component {
     }
     componentDidMount() {
         let currentState = this.state;
-        currentState.totalPrice = currentState.originalTotalPrice = parseInt(this.props.bookingSummary.unitPrice, 10) * parseInt(this.props.bookingSummary.tickets, 10);
+        currentState.totalPrice = currentState.originalTotalPrice = parseInt(this.props.location.bookingSummary.unitPrice, 10) * parseInt(this.props.location.bookingSummary.tickets, 10);
         this.setState({ state: currentState });
-    }
-
-    backToBookShowHandler = () => {
-        ReactDOM.render(<BookShow id={this.props.id} bookingSummary={this.props.bookingSummary} />, document.getElementById('root'));
     }
 
     confirmBookingHandler = () => {
         this.setState({ open: true });
     }
     snackBarCloseHandler = () => {
-        ReactDOM.render(<Home />, document.getElementById('root'));
+        this.props.history.push("/");
     }
     couponCodeChangeHandler = (e) => {
         this.setState({ couponCode: e.target.value });
@@ -78,147 +72,150 @@ class Confirmation extends Component {
 
     render() {
         const { classes } = this.props;
-    
+
         return (
-          <div className="Details">
-            <Header />
-    
-            <div className="confirmation marginTop16">
-              <div>
-                <Typography className="back" onClick={this.backToBookShowHandler}>
-                  &#60; Back to Book Show
-                </Typography><br />
-    
-                <Card className="cardStyle">
-                  <CardContent>
-                    <Typography variant="headline" component="h2">
-                      SUMMARY
+            <div className="Details">
+                <Header />
+
+                <div className="confirmation marginTop16">
+                    <div>
+                        <Link to={"/bookshow/" + this.props.match.params.id}>
+                            <Typography className="back" >
+                                &#60; Back to Book Show
+                            </Typography>
+                        </Link>
+                        <br />
+
+                        <Card className="cardStyle">
+                            <CardContent>
+                                <Typography variant="headline" component="h2">
+                                    SUMMARY
                     </Typography>
-                    <br />
-    
-                    <div className="coupon-container">
-                      <div className="confirmLeft">
-                        <Typography>Location:</Typography>
-                      </div>
-                      <div>
-                        <Typography>{this.props.bookingSummary.location}</Typography>
-                      </div>
-                    </div>
-                    <br />
-    
-                    <div className="coupon-container">
-                      <div className="confirmLeft">
-                        <Typography>Language:</Typography>
-                      </div>
-                      <div>
-                        <Typography>{this.props.bookingSummary.language}</Typography>
-                      </div>
-                    </div>
-                    <br />
-    
-                    <div className="coupon-container">
-                      <div className="confirmLeft">
-                        <Typography>Show Date:</Typography>
-                      </div>
-                      <div>
-                        <Typography>{this.props.bookingSummary.showdate}</Typography>
-                      </div>
-                    </div>
-                    <br />
-    
-                    <div className="coupon-container">
-                      <div className="confirmLeft">
-                        <Typography>Show Time:</Typography>
-                      </div>
-                      <div>
-                        <Typography>{this.props.bookingSummary.showtime}</Typography>
-                      </div>
-                    </div>
-                    <br />
-    
-                    <div className="coupon-container">
-                      <div className="confirmLeft">
-                        <Typography>Tickets:</Typography>
-                      </div>
-                      <div>
-                        <Typography>{this.props.bookingSummary.tickets}</Typography>
-                      </div>
-                    </div>
-                    <br />
-    
-                    <div className="coupon-container">
-                      <div className="confirmLeft">
-                        <Typography>Unit Price:</Typography>
-                      </div>
-                      <div>
-                        <Typography>{this.props.bookingSummary.unitPrice}</Typography>
-                      </div>
-                    </div>
-                    <br />
-    
-                    <div className="coupon-container">
-                      <div>
-                        <FormControl className="formControl">
-                          <InputLabel htmlFor="coupon">
-                            <Typography>Coupon Code</Typography>
-                          </InputLabel>
-                          <Input id="coupon" onChange={this.couponCodeChangeHandler} />
-                        </FormControl>
-                      </div>
-                      <div className="marginApply">
-                        <Button variant="contained" onClick={this.couponApplyHandler.bind(this)} color="primary">Apply</Button>
-                      </div>
-                    </div>
-                    <br /><br />
-    
-                    <div className="coupon-container">
-                      <div className="confirmLeft">
-                        <span className="bold">Total Price:</span>
-                      </div>
-                      <div>{parseInt(this.state.totalPrice, 10)}</div>
-                    </div>
-                    <br />
-    
-                    <Button variant="contained" onClick={this.confirmBookingHandler} color="primary">
-                      Confirm Booking
+                                <br />
+
+                                <div className="coupon-container">
+                                    <div className="confirmLeft">
+                                        <Typography>Location:</Typography>
+                                    </div>
+                                    <div>
+                                        <Typography>{this.props.location.bookingSummary.location}</Typography>
+                                    </div>
+                                </div>
+                                <br />
+
+                                <div className="coupon-container">
+                                    <div className="confirmLeft">
+                                        <Typography>Language:</Typography>
+                                    </div>
+                                    <div>
+                                        <Typography>{this.props.location.bookingSummary.language}</Typography>
+                                    </div>
+                                </div>
+                                <br />
+
+                                <div className="coupon-container">
+                                    <div className="confirmLeft">
+                                        <Typography>Show Date:</Typography>
+                                    </div>
+                                    <div>
+                                        <Typography>{this.props.location.bookingSummary.showdate}</Typography>
+                                    </div>
+                                </div>
+                                <br />
+
+                                <div className="coupon-container">
+                                    <div className="confirmLeft">
+                                        <Typography>Show Time:</Typography>
+                                    </div>
+                                    <div>
+                                        <Typography>{this.props.location.bookingSummary.showtime}</Typography>
+                                    </div>
+                                </div>
+                                <br />
+
+                                <div className="coupon-container">
+                                    <div className="confirmLeft">
+                                        <Typography>Tickets:</Typography>
+                                    </div>
+                                    <div>
+                                        <Typography>{this.props.location.bookingSummary.tickets}</Typography>
+                                    </div>
+                                </div>
+                                <br />
+
+                                <div className="coupon-container">
+                                    <div className="confirmLeft">
+                                        <Typography>Unit Price:</Typography>
+                                    </div>
+                                    <div>
+                                        <Typography>{this.props.location.bookingSummary.unitPrice}</Typography>
+                                    </div>
+                                </div>
+                                <br />
+
+                                <div className="coupon-container">
+                                    <div>
+                                        <FormControl className="formControl">
+                                            <InputLabel htmlFor="coupon">
+                                                <Typography>Coupon Code</Typography>
+                                            </InputLabel>
+                                            <Input id="coupon" onChange={this.couponCodeChangeHandler} />
+                                        </FormControl>
+                                    </div>
+                                    <div className="marginApply">
+                                        <Button variant="contained" onClick={this.couponApplyHandler.bind(this)} color="primary">Apply</Button>
+                                    </div>
+                                </div>
+                                <br /><br />
+
+                                <div className="coupon-container">
+                                    <div className="confirmLeft">
+                                        <span className="bold">Total Price:</span>
+                                    </div>
+                                    <div>{parseInt(this.state.totalPrice, 10)}</div>
+                                </div>
+                                <br />
+
+                                <Button variant="contained" onClick={this.confirmBookingHandler} color="primary">
+                                    Confirm Booking
                     </Button>
-                  </CardContent>
-                </Card>
-              </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </div>
+
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                    }}
+                    className="snackbar"
+                    open={this.state.open}
+                    onClose={this.snackBarCloseHandler}
+                    message={
+                        <span id="client-snackbar" className={classes.success}>
+                            <div className="confirm"><div><CheckCircleIcon /></div><div className="message"> Booking Confirmed!</div></div>
+                        </span>
+                    }
+                    action={[
+                        <IconButton
+                            key="close"
+                            aria-label="Close"
+                            color="inherit"
+                            className={classes.close}
+                            onClick={this.snackBarCloseHandler}
+                        >
+                            <CloseIcon />
+                        </IconButton>,
+                    ]}
+                />
             </div>
-    
-            <Snackbar
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
-              }}
-              className="snackbar"
-              open={this.state.open}
-              onClose={this.snackBarCloseHandler}
-              message={
-                <span id="client-snackbar" className={classes.success}>
-                  <div className="confirm"><div><CheckCircleIcon /></div><div className="message"> Booking Confirmed!</div></div>
-                </span>
-              }
-              action={[
-                <IconButton
-                  key="close"
-                  aria-label="Close"
-                  color="inherit"
-                  className={classes.close}
-                  onClick={this.snackBarCloseHandler}
-                >
-                  <CloseIcon />
-                </IconButton>,
-              ]}
-            />
-          </div>
         )
-      }
+    }
 }
 
 Confirmation.propTypes = {
     classes: PropTypes.object.isRequired,
-  };
+};
 
 export default withStyles(styles)(Confirmation); 
