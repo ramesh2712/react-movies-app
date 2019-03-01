@@ -17,7 +17,10 @@
     height: 35px;
     background: #ff7f7f;
  }
- 
+ .bookshow-button {
+    float: right;
+    margin-right: 8px;
+}
  @keyframes app-logo-spin {
     from { transform: scaleX(-1); }
  }
