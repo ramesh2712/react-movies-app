@@ -1,0 +1,71 @@
+Skip to content
+ 
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ @ramesh2712 Sign out
+ The password you provided is weak and can be easily guessed. To increase your security, please change your password as soon as possible.
+
+Read our documentation on safer password practices.
+
+0
+0 1 upgrad-edu/movies-app
+ Code  Issues 0  Pull requests 0  Projects 0  Wiki  Insights
+movies-app/src/screens/confirmation/Confirmation.css
+@srishti srishti Added 'Confirmation' component for showing confirmation page for the …
+04cbd0b  on 17 Sep 2018
+50 lines (39 sloc)  498 Bytes
+    
+.formControl {
+  width: 240px;
+}
+
+.coupon-container {
+  display: flex;
+}
+
+.confirm {
+  display: flex;
+}
+
+.confirmLeft {
+  width: 40%
+}
+
+.marginApply {
+  margin: 16px 0px 0px 16px;
+}
+
+.confirmation {
+  text-align: center;
+}
+
+.cardStyle {
+  width: 380px;
+  padding: 32px 32px 32px 32px;
+  margin: auto;
+  text-align: left;
+}
+
+.marginTop16 {
+  margin-top: 16px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.back {
+  cursor: pointer;
+}
+
+.snackbar {
+  margin-top: 64px;
+}
+
+.message {
+  margin: 4px 0px 0px 16px
+}
