@@ -16,7 +16,7 @@ class Details extends Component {
     constructor() {
         super();
         this.state = {
-            movie: [],
+            movie: {},
             starIcons: [
                 {
                    id: 1,
